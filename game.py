@@ -93,8 +93,8 @@ while True:
         game_over()
 
     #when bat hits the ball    
-    if (ball.ycor() <= -220) and (ball.xcor() > (bat.xcor()-50)):
+    if (ball.ycor() <= -220) and (ball.xcor()>bat.xcor()-50 and ball.xcor()<bat.xcor()+50):
         ball.sety(-220)
         dy *= -1 
-              
+
     window.update()
