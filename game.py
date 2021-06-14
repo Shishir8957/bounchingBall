@@ -1,5 +1,6 @@
 import turtle
 import time
+import random
 
 # parmanent variables
 WIDTH = 500
@@ -10,6 +11,7 @@ i=0
 j=0 
 codx = -255
 cody = 230
+COLOR = ['yellow', 'gold', 'orange', 'red', 'maroon', 'violet', 'magenta', 'purple', 'navy', 'blue', 'skyblue', 'cyan', 'turquoise', 'lightgreen', 'green', 'darkgreen', 'chocolate', 'brown', 'black','gray', 'white']
 
 
 #setting up working space 
@@ -56,7 +58,8 @@ while i!=112:
         j+=1       
     bubble = turtle.Turtle()
     bubble.shape('circle')
-    bubble.color('red')
+    col = random.choice(COLOR)
+    bubble.color(col)
     bubble.penup()
     codx += 30
     bubble.goto(codx,cody)
