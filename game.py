@@ -1,6 +1,7 @@
 import turtle
 import time
 import random
+import math
 
 # parmanent variables
 WIDTH = 500
@@ -104,6 +105,14 @@ def game_over():
     game.write('Game Over', font=('arial', 50), align='center')
     time.sleep(3)
 
+def Collision(t1,t2):
+    distance = math.sqrt(math.pow(t1.xcor()-t2.xcor(),2)+math.pow(t1.ycor()-t2.ycor(),2))
+    if distance < 20:
+        return True
+    else:
+        return False    
+
+
 #on key press
 window.listen()
 window.onkeypress(left,'Left')
@@ -137,5 +146,10 @@ while True:
     if (ball.ycor() <= -220) and (ball.xcor()>bat.xcor()-60 and ball.xcor()<bat.xcor()+60):
         ball.sety(-220)
         dy *= -1 
-              
+
+    if Collision(ball,bubble):
+        ball.sety(10)
+        dy *= -1 
+        bubble.hideturtle()
+
     window.update()
