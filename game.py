@@ -4,8 +4,12 @@ import time
 # parmanent variables
 WIDTH = 500
 HEIGHT = 500
-dx = 1
-dy = 1
+dx = 3
+dy = 3
+i=0
+j=0 
+codx = -255
+cody = 230
 
 
 #setting up working space 
@@ -43,15 +47,18 @@ ball.penup()
 ball.goto(0,-216)
 
 #bubble 
-i=0
-codx = -265
-while i!=14:
+while i!=112:
+    if j == 16:
+        codx = -255
+        cody = cody - 30
+        j=1
+    else:
+        j+=1       
     bubble = turtle.Turtle()
     bubble.shape('circle')
-    bubble.color('#0a4c03')
+    bubble.color('red')
     bubble.penup()
-    cody = 230
-    codx += 35
+    codx += 30
     bubble.goto(codx,cody)
     i+=1
 
