@@ -42,6 +42,19 @@ ball.color('#0a4c03')
 ball.penup()
 ball.goto(0,-216)
 
+#bubble 
+i=0
+codx = -265
+while i!=14:
+    bubble = turtle.Turtle()
+    bubble.shape('circle')
+    bubble.color('#0a4c03')
+    bubble.penup()
+    cody = 230
+    codx += 35
+    bubble.goto(codx,cody)
+    i+=1
+
 #bat
 bat = turtle.Turtle()
 bat.shape('square')
@@ -54,12 +67,14 @@ bat.goto(0,-245)
 def left():
     x=bat.xcor()
     bat.setx(x-20)
+
+
 def right():
     x = bat.xcor()
-    bat.setx(x+1)
+    bat.setx(x+20)
      
 # def move():
-#     if a == 1:
+#     if True == a:
 #         x=bat.xcor()
 #         bat.setx(x-1)
 #     else:
@@ -88,8 +103,7 @@ window.onkeypress(right,'Right')
 
 while True:
     movement()
-    # move()
-
+    #move()
 
     #ball return when strick at border 
     if ball.xcor() >= 250:
