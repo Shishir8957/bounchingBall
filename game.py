@@ -6,8 +6,8 @@ import math
 # parmanent variables
 WIDTH = 500
 HEIGHT = 500
-dx = 3
-dy = 3
+dx = -3
+dy = -3
 i=0
 j=0 
 codx = -255
@@ -50,20 +50,28 @@ ball.penup()
 ball.goto(0,-216)
 
 #bubble 
-while i!=112:
+no_of_bubbles = 112
+bubbles = []
+
+while i != no_of_bubbles:
+    bubbles.append(turtle.Turtle())
+    i+=1
+i=0
+
+while i!=no_of_bubbles:
+    buble = bubbles[i]
     if j == 16:
         codx = -255
         cody = cody - 30
         j=1
     else:
         j+=1       
-    bubble = turtle.Turtle()
-    bubble.shape('circle')
+    buble.shape('circle')
     col = random.choice(COLOR)
-    bubble.color(col)
-    bubble.penup()
+    buble.color(col)
+    buble.penup()
     codx += 30
-    bubble.goto(codx,cody)
+    buble.goto(codx,cody)
     i+=1
 
 #bat
@@ -83,15 +91,6 @@ def left():
 def right():
     x = bat.xcor()
     bat.setx(x+20)
-     
-# def move():
-#     if True == a:
-#         x=bat.xcor()
-#         bat.setx(x-1)
-#     else:
-#         x = bat.xcor()
-#         bat.setx(x+1)
-
 
 #ball movement 
 def movement():
@@ -107,7 +106,7 @@ def game_over():
 
 def Collision(t1,t2):
     distance = math.sqrt(math.pow(t1.xcor()-t2.xcor(),2)+math.pow(t1.ycor()-t2.ycor(),2))
-    if distance < 20:
+    if distance < 15:
         return True
     else:
         return False    
@@ -122,7 +121,6 @@ window.onkeypress(right,'Right')
 
 while True:
     movement()
-    #move()
 
     #ball return when strick at border 
     if ball.xcor() >= 250:
@@ -147,9 +145,12 @@ while True:
         ball.sety(-220)
         dy *= -1 
 
-    if Collision(ball,bubble):
-        ball.sety(10)
-        dy *= -1 
-        bubble.hideturtle()
+    #bubble pop
+    for bubble in bubbles:
+        if Collision(ball,bubble):
+            ball.sety(bubble.xcor())
+            dy *= -1 
+            bubble.hideturtle()
+
 
     window.update()
