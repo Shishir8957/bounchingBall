@@ -52,8 +52,8 @@ bat.goto(0,-245)
 
 #bat function
 def left():
-    x = bat.xcor()
-    bat.setx(x-20)
+    x=bat.xcor()
+    bat.goto(bat.xcor())
 def right():
     x = bat.xcor()
     bat.setx(x+20)    
