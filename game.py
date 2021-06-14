@@ -53,7 +53,7 @@ bat.goto(0,-245)
 #bat function
 def left():
     x=bat.xcor()
-    bat.goto(bat.xcor())
+    bat.setx(x-20)
 def right():
     x = bat.xcor()
     bat.setx(x+20)    
@@ -93,8 +93,8 @@ while True:
         game_over()
 
     #when bat hits the ball    
-    if ball.ycor() <= -250 and ball.ycor()>bat.ycor()-50:
-        ball.sety(250)
+    if (ball.ycor() <= -220) and (ball.xcor() > (bat.xcor()-50)):
+        ball.sety(-220)
         dy *= -1 
               
     window.update()
