@@ -4,8 +4,8 @@ import time
 # parmanent variables
 WIDTH = 500
 HEIGHT = 500
-dx = 2
-dy = 2
+dx = 1
+dy = 1
 
 
 #setting up working space 
