@@ -2,6 +2,7 @@ import turtle
 import time
 import random
 import math
+from typing import Counter
 
 # parmanent variables
 WIDTH = 500
@@ -10,6 +11,7 @@ dx = -3
 dy = -3
 i=0
 j=0 
+COUNT = 0
 codx = -255
 cody = 200
 score_player = 0
@@ -106,7 +108,14 @@ def game_over():
     window.clear()
     game = turtle.Turtle()
     game.hideturtle()
-    game.write('Game Over', font=('arial', 50), align='center')
+    game.write('Game Over /n Your score is: {} '.format(COUNT), font=('arial', 20), align='center')
+    time.sleep(1)
+
+def winner():
+    window.clear()
+    winner = turtle.Turtle()
+    winner.hideturtle()
+    winner.write('You Win /n Your score is: {} '.format(COUNT), font=('arial', 20), align='center')
     time.sleep(1)
 
 #removing ball when collide wirh ball 
@@ -189,6 +198,9 @@ while True:
             score.clear()
             score.write('Score: {}'.format(score_player), font=('arial', 15), align='center')
             time.sleep(0)
+            COUNT += 1
+            if COUNT == no_of_bubbles:
+               winner() 
 
 
     window.update()
