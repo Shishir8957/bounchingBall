@@ -11,7 +11,8 @@ dy = -3
 i=0
 j=0 
 codx = -255
-cody = 230
+cody = 200
+score_player = 0
 COLOR = ['yellow', 'gold', 'orange', 'red', 'maroon', 'violet', 'magenta', 'purple', 'navy', 'blue', 'skyblue', 'cyan', 'turquoise', 'lightgreen', 'green', 'darkgreen', 'chocolate', 'brown', 'black','gray', 'white']
 
 
@@ -42,6 +43,7 @@ box.forward(500)
 box.left(90)
 box.forward(250)
 
+
 #ball
 ball = turtle.Turtle()
 ball.shape('circle')
@@ -50,14 +52,16 @@ ball.penup()
 ball.goto(0,-216)
 
 #bubble 
-no_of_bubbles = 112
+no_of_bubbles = 80
 bubbles = []
 
+#creating multiple turtle for bubble
 while i != no_of_bubbles:
     bubbles.append(turtle.Turtle())
     i+=1
 i=0
 
+#setting bubble position
 while i!=no_of_bubbles:
     buble = bubbles[i]
     if j == 16:
@@ -73,6 +77,7 @@ while i!=no_of_bubbles:
     codx += 30
     buble.goto(codx,cody)
     i+=1
+    time.sleep(0)
 
 #bat
 bat = turtle.Turtle()
@@ -102,15 +107,44 @@ def game_over():
     game = turtle.Turtle()
     game.hideturtle()
     game.write('Game Over', font=('arial', 50), align='center')
-    time.sleep(3)
+    time.sleep(1)
 
+#removing ball when collide wirh ball 
 def Collision(t1,t2):
     distance = math.sqrt(math.pow(t1.xcor()-t2.xcor(),2)+math.pow(t1.ycor()-t2.ycor(),2))
     if distance < 15:
         return True
     else:
-        return False    
+        return False  
 
+#score board
+score = turtle.Turtle()
+score.hideturtle()
+score.penup()
+score.speed(0)
+score.color('#A32CC4')
+score.goto(0,220)
+score.write('Score: {}'.format(score_player),font=('arial',15),align= 'center')
+
+#score border
+score_border = turtle.Turtle()
+score_border.hideturtle()
+score_border.color('black')
+score_border.width(3)
+score_border.left(90)
+score_border.penup()
+score_border.forward(215)
+score_border.pendown()
+score_border.left(90)
+score_border.forward(248)
+score_border.right(90)
+score_border.forward(33)
+score_border.right(90)
+score_border.forward(488)
+score_border.right(90)
+score_border.forward(33)
+score_border.right(90)
+score_border.forward(248)
 
 #on key press
 window.listen()
@@ -118,19 +152,19 @@ window.onkeypress(left,'Left')
 window.onkeypress(right,'Right')
 
 
-
+#main function
 while True:
     movement()
 
-    #ball return when strick at border 
-    if ball.xcor() >= 250:
+    #ball return when strick on border 
+    if ball.xcor() >= 240:
         dx*=-1
-    if ball.xcor() <= -250:
+    if ball.xcor() <= -240:
         dx*=-1      
-    if ball.ycor() >= 250:
+    if ball.ycor() >= 200:
         dy*=-1
 
-    #bat stop when it     
+    #bat cannot go further then border 
     if bat.xcor() <= -190:
         bat.setx(-190)
     if bat.xcor() >= 190:
@@ -145,12 +179,16 @@ while True:
         ball.sety(-220)
         dy *= -1 
 
-    #bubble pop
+    #bubble popping function
     for bubble in bubbles:
         if Collision(ball,bubble):
-            ball.sety(bubble.xcor())
             dy *= -1 
+            bubble.goto(550,550)
             bubble.hideturtle()
+            score_player += 1
+            score.clear()
+            score.write('Score: {}'.format(score_player), font=('arial', 15), align='center')
+            time.sleep(0)
 
 
     window.update()
