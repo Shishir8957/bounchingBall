@@ -2,13 +2,13 @@ import turtle
 import time
 import random
 import math
-from typing import Counter
+import winsound
 
 # parmanent variables
 WIDTH = 500
 HEIGHT = 500
-dx = 4
-dy = 4
+dx = 5
+dy = 5
 i=0
 j=0 
 COUNT = 0
@@ -21,35 +21,46 @@ COLOR = ['yellow', 'gold', 'orange', 'red', 'maroon', 'violet', 'magenta', 'purp
 #setting up working space 
 window = turtle.Screen()
 window.title('Bounching Ball')
-window.bgpic('C:\\Users\\royel\\djangoAdvance\\arc\\bg_pic2.png')
+window.bgpic('bg.gif')
 window.setup(WIDTH,HEIGHT)
 window.tracer(0)
 
 #boder
 box = turtle.Turtle()
-box.hideturtle()
-box.color('black')
-box.width(3)
+box.color('Black')
+box.width(5)
 box.penup()
-box.right(90)
-box.goto(0,-250)
+box.speed(0)
+box.setposition(-250,250)
 box.pendown()
-box.left(90)
-box.forward(250)
-box.left(90)
-box.forward(500)
-box.left(90)
-box.forward(500)
-box.left(90)
-box.forward(500)
-box.left(90)
-box.forward(250)
+for border in range(4):
+    box.fd(500)
+    box.right(90)
+    box.fd(500)
+    box.right(90)
+box.hideturtle()
 
+# Score border
+box = turtle.Turtle()
+box.hideturtle()
+box.color("black")
+box.penup()
+box.speed(0)
+box.setposition(-247,245)
+box.pendown()
+box.pensize(3)
+for border in range(4):
+    box.fd(486)
+    box.right(90)
+    box.fd(32)
+    box.right(90)
+box.hideturtle()
 
 #ball
 ball = turtle.Turtle()
 ball.shape('circle')
-ball.color('#0a4c03')
+col = random.choice(COLOR)
+ball.color(col)
 ball.penup()
 ball.goto(0,-216)
 
@@ -108,14 +119,14 @@ def game_over():
     window.clear()
     game = turtle.Turtle()
     game.hideturtle()
-    game.write('Game Over /n Your score is: {} '.format(COUNT),game.color('red'), font=('arial', 20), align='center')
+    game.write('****GAME OVER****\n\n\n\n\n   Your score is: {} '.format(COUNT),game.color('red'), font=('arial', 20), align='center')
     time.sleep(1)
 
 def winner():
     window.clear()
     winner = turtle.Turtle()
     winner.hideturtle()
-    winner.write('You Win /n Your score is: {} '.format(COUNT),winner.color('Green'), font=('arial', 20), align='center')
+    winner.write('You Win(:\n\n\n\n\n    Your score is: {} '.format(COUNT),winner.color('Green'), font=('arial', 20), align='center')
     time.sleep(1)
 
 #removing ball when collide wirh ball 
@@ -134,26 +145,6 @@ score.speed(0)
 score.color('#A32CC4')
 score.goto(0,220)
 score.write('Score: {}'.format(score_player),font=('arial',15),align= 'center')
-
-#score border
-score_border = turtle.Turtle()
-score_border.hideturtle()
-score_border.color('black')
-score_border.width(3)
-score_border.left(90)
-score_border.penup()
-score_border.forward(215)
-score_border.pendown()
-score_border.left(90)
-score_border.forward(248)
-score_border.right(90)
-score_border.forward(33)
-score_border.right(90)
-score_border.forward(488)
-score_border.right(90)
-score_border.forward(33)
-score_border.right(90)
-score_border.forward(248)
 
 #on key press
 window.listen()
@@ -182,9 +173,11 @@ while True:
     #game over when ball misses to hit ball    
     if ball.ycor() <= -250:
         game_over()
+        break
 
     #when bat hits the ball    
     if (ball.ycor() <= -220) and (ball.xcor()>bat.xcor()-60 and ball.xcor()<bat.xcor()+60):
+        winsound.PlaySound('hit.wav',winsound.SND_ASYNC)
         ball.sety(-220)
         dy *= -1 
 
@@ -196,11 +189,11 @@ while True:
             bubble.hideturtle()
             score_player += 1
             score.clear()
+            winsound.PlaySound('pop.wav',winsound.SND_ASYNC)
             score.write('Score: {}'.format(score_player), font=('arial', 15), align='center')
             time.sleep(0)
             COUNT += 1
             if COUNT == no_of_bubbles:
                winner() 
-
 
     window.update()
