@@ -7,8 +7,8 @@ import winsound
 # parmanent variables
 WIDTH = 500
 HEIGHT = 500
-dx = 5
-dy = 5
+dx = 4
+dy = 4
 i=0
 j=0 
 COUNT = 0
@@ -172,6 +172,7 @@ while True:
 
     #game over when ball misses to hit ball    
     if ball.ycor() <= -250:
+        winsound.PlaySound('game_over.wav',winsound.SND_ASYNC)
         game_over()
         break
 
