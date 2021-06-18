@@ -7,23 +7,61 @@ import winsound
 # parmanent variables
 WIDTH = 500
 HEIGHT = 500
-dx = 4
-dy = 4
+dx = 5
+dy = 5
 i=0
-j=0 
+j=0
 COUNT = 0
 codx = -255
 cody = 200
 score_player = 0
-COLOR = ['yellow', 'gold', 'orange', 'red', 'maroon', 'violet', 'magenta', 'purple', 'navy', 'blue', 'skyblue', 'cyan', 'turquoise', 'lightgreen', 'green', 'darkgreen', 'chocolate', 'brown', 'black','gray', 'white']
+COLOR = ['yellow', 'gold', 'orange', 'red', 'maroon', 'violet', 'magenta', 'purple', 'navy', 'blue', 'skyblue', 'cyan', 'turquoise', 'lightgreen', 'green', 'darkgreen', 'chocolate', 'brown','gray', 'white']
 
 
-#setting up working space 
+loading = ".\\Loading\\"
+
+end = ".\\Coffin_Dance\\"
+
+#loading_frame
+def loading_frame():
+    image_no = 1
+    img_no = 1
+    img_no1 = 1
+    winsound.PlaySound('voice.wav',winsound.SND_ASYNC)
+    while img_no <= 20:
+        im = str(image_no)
+        window.addshape(loading + im + '.gif')
+        time.sleep(0.01)
+        load.shape(loading + im + '.gif')
+        img_no += 1
+    time.sleep(1.99)
+    winsound.PlaySound('bgmusic.wav',winsound.SND_ASYNC)    
+
+    while image_no <=68:
+        img = str(image_no)
+        window.addshape(loading + '\\loading' + img + '.gif')
+        time.sleep(0.01)
+        load.shape(loading + '\\loading' + img + '.gif')
+        image_no += 1
+
+    while img_no1 <=5:
+        img = str(img_no1)
+        window.addshape(loading + '\\game_instruction' + img + '.gif')
+        time.sleep(0.8)
+        load.shape(loading + '\\game_instruction' + img + '.gif')
+        img_no1 += 1
+
+
+#setting up working space
 window = turtle.Screen()
 window.title('Bounching Ball')
 window.bgpic('bg.gif')
 window.setup(WIDTH,HEIGHT)
+
+load = turtle.Turtle()
+loading_frame()
 window.tracer(0)
+
 
 #boder
 box = turtle.Turtle()
@@ -64,7 +102,7 @@ ball.color(col)
 ball.penup()
 ball.goto(0,-216)
 
-#bubble 
+#bubble
 no_of_bubbles = 80
 bubbles = []
 
@@ -82,7 +120,7 @@ while i!=no_of_bubbles:
         cody = cody - 30
         j=1
     else:
-        j+=1       
+        j+=1
     buble.shape('circle')
     col = random.choice(COLOR)
     buble.color(col)
@@ -110,32 +148,42 @@ def right():
     x = bat.xcor()
     bat.setx(x+20)
 
-#ball movement 
+#ball movement
 def movement():
-    ball.goto(ball.xcor()+dx,ball.ycor()+dy)    
+    ball.goto(ball.xcor()+dx,ball.ycor()+dy)
 
 #Game over
 def game_over():
     window.clear()
     game = turtle.Turtle()
+    window.bgcolor('#8AC8FD')
+    image_no = 1
+    winsound.PlaySound('Coffin_Dance_audio.wav',winsound.SND_ASYNC)
+    while image_no <=160:
+        img = str(image_no)
+        window.addshape(end + '\\Cofine_Dance' + img + '.gif')
+        time.sleep(0.01)
+        game.shape(end + '\\Cofine_Dance' + img + '.gif')
+        image_no += 1  
     game.hideturtle()
     game.write('****GAME OVER****\n\n\n\n\n   Your score is: {} '.format(COUNT),game.color('red'), font=('arial', 20), align='center')
-    time.sleep(1)
-
+    time.sleep(2)
+    
 def winner():
     window.clear()
     winner = turtle.Turtle()
+
     winner.hideturtle()
     winner.write('You Win(:\n\n\n\n\n    Your score is: {} '.format(COUNT),winner.color('Green'), font=('arial', 20), align='center')
     time.sleep(1)
 
-#removing ball when collide wirh ball 
+#removing ball when collide wirh ball
 def Collision(t1,t2):
     distance = math.sqrt(math.pow(t1.xcor()-t2.xcor(),2)+math.pow(t1.ycor()-t2.ycor(),2))
     if distance < 15:
         return True
     else:
-        return False  
+        return False
 
 #score board
 score = turtle.Turtle()
@@ -146,6 +194,7 @@ score.color('#A32CC4')
 score.goto(0,220)
 score.write('Score: {}'.format(score_player),font=('arial',15),align= 'center')
 
+
 #on key press
 window.listen()
 window.onkeypress(left,'Left')
@@ -155,37 +204,37 @@ window.onkeypress(right,'Right')
 #main function
 while True:
     movement()
+    
 
-    #ball return when strick on border 
+    #ball return when strick on border
     if ball.xcor() >= 240:
         dx*=-1
     if ball.xcor() <= -240:
-        dx*=-1      
+        dx*=-1
     if ball.ycor() >= 200:
         dy*=-1
 
-    #bat cannot go further then border 
+    #bat cannot go further then border
     if bat.xcor() <= -190:
         bat.setx(-190)
     if bat.xcor() >= 190:
-        bat.setx(190)   
+        bat.setx(190)
 
-    #game over when ball misses to hit ball    
+    #game over when ball misses to hit ball
     if ball.ycor() <= -250:
-        winsound.PlaySound('game_over.wav',winsound.SND_ASYNC)
         game_over()
         break
 
-    #when bat hits the ball    
+    #when bat hits the ball
     if (ball.ycor() <= -220) and (ball.xcor()>bat.xcor()-60 and ball.xcor()<bat.xcor()+60):
         winsound.PlaySound('hit.wav',winsound.SND_ASYNC)
         ball.sety(-220)
-        dy *= -1 
+        dy *= -1
 
     #bubble popping function
     for bubble in bubbles:
         if Collision(ball,bubble):
-            dy *= -1 
+            dy *= -1
             bubble.goto(550,550)
             bubble.hideturtle()
             score_player += 1
@@ -195,6 +244,6 @@ while True:
             time.sleep(0)
             COUNT += 1
             if COUNT == no_of_bubbles:
-               winner() 
+               winner()
 
     window.update()
