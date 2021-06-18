@@ -12,15 +12,20 @@ dy = 5
 i=0
 j=0
 COUNT = 0
+#use for setting position of bubble
 codx = -255
 cody = 200
 score_player = 0
 COLOR = ['yellow', 'gold', 'orange', 'red', 'maroon', 'violet', 'magenta', 'purple', 'navy', 'blue', 'skyblue', 'cyan', 'turquoise', 'lightgreen', 'green', 'darkgreen', 'chocolate', 'brown','gray', 'white']
 
-
+#path for img file
 loading = ".\\Loading\\"
-
 end = ".\\Coffin_Dance\\"
+
+#setting up working space
+window = turtle.Screen()
+window.title('Bounching Ball')
+window.setup(WIDTH,HEIGHT)
 
 #loading_frame
 def loading_frame():
@@ -28,6 +33,7 @@ def loading_frame():
     img_no = 1
     img_no1 = 1
     winsound.PlaySound('voice.wav',winsound.SND_ASYNC)
+    #team image 
     while img_no <= 20:
         im = str(image_no)
         window.addshape(loading + im + '.gif')
@@ -37,6 +43,7 @@ def loading_frame():
     time.sleep(1.99)
     winsound.PlaySound('bgmusic.wav',winsound.SND_ASYNC)    
 
+    #loading image
     while image_no <=68:
         img = str(image_no)
         window.addshape(loading + '\\loading' + img + '.gif')
@@ -44,6 +51,7 @@ def loading_frame():
         load.shape(loading + '\\loading' + img + '.gif')
         image_no += 1
 
+    #instruction
     while img_no1 <=5:
         img = str(img_no1)
         window.addshape(loading + '\\game_instruction' + img + '.gif')
@@ -51,13 +59,7 @@ def loading_frame():
         load.shape(loading + '\\game_instruction' + img + '.gif')
         img_no1 += 1
 
-
-#setting up working space
-window = turtle.Screen()
-window.title('Bounching Ball')
-window.bgpic('bg.gif')
-window.setup(WIDTH,HEIGHT)
-
+#turtle for loading frame
 load = turtle.Turtle()
 loading_frame()
 window.tracer(0)
@@ -81,16 +83,16 @@ box.hideturtle()
 # Score border
 box = turtle.Turtle()
 box.hideturtle()
-box.color("black")
+box.color('white')
 box.penup()
 box.speed(0)
 box.setposition(-247,245)
 box.pendown()
 box.pensize(3)
 for border in range(4):
-    box.fd(486)
+    box.fd(487)
     box.right(90)
-    box.fd(32)
+    box.fd(30)
     box.right(90)
 box.hideturtle()
 
@@ -102,7 +104,7 @@ ball.color(col)
 ball.penup()
 ball.goto(0,-216)
 
-#bubble
+#bubble decleration
 no_of_bubbles = 80
 bubbles = []
 
@@ -143,7 +145,6 @@ def left():
     x=bat.xcor()
     bat.setx(x-20)
 
-
 def right():
     x = bat.xcor()
     bat.setx(x+20)
@@ -152,6 +153,7 @@ def right():
 def movement():
     ball.goto(ball.xcor()+dx,ball.ycor()+dy)
 
+
 #Game over
 def game_over():
     window.clear()
@@ -159,16 +161,18 @@ def game_over():
     window.bgcolor('#8AC8FD')
     image_no = 1
     winsound.PlaySound('Coffin_Dance_audio.wav',winsound.SND_ASYNC)
+    #used 
     while image_no <=160:
         img = str(image_no)
         window.addshape(end + '\\Cofine_Dance' + img + '.gif')
-        time.sleep(0.01)
+        time.sleep(0.0001)
         game.shape(end + '\\Cofine_Dance' + img + '.gif')
         image_no += 1  
     game.hideturtle()
     game.write('****GAME OVER****\n\n\n\n\n   Your score is: {} '.format(COUNT),game.color('red'), font=('arial', 20), align='center')
     time.sleep(2)
     
+#winner   
 def winner():
     window.clear()
     winner = turtle.Turtle()
@@ -190,7 +194,7 @@ score = turtle.Turtle()
 score.hideturtle()
 score.penup()
 score.speed(0)
-score.color('#A32CC4')
+score.color('white')
 score.goto(0,220)
 score.write('Score: {}'.format(score_player),font=('arial',15),align= 'center')
 
@@ -200,11 +204,10 @@ window.listen()
 window.onkeypress(left,'Left')
 window.onkeypress(right,'Right')
 
-
 #main function
 while True:
+    #ball movement function calling
     movement()
-    
 
     #ball return when strick on border
     if ball.xcor() >= 240:
