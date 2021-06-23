@@ -4,11 +4,11 @@ import random
 import math
 import winsound
 
-# parmanent variables
+#permanent variables
 WIDTH = 500
 HEIGHT = 500
-dx = 5
-dy = 5
+dx = 3.5
+dy = 3.5
 i=0
 j=0
 COUNT = 0
@@ -143,11 +143,11 @@ bat.goto(0,-245)
 #bat function
 def left():
     x=bat.xcor()
-    bat.setx(x-20)
+    bat.setx(x-30)
 
 def right():
     x = bat.xcor()
-    bat.setx(x+20)
+    bat.setx(x+30)
 
 #ball movement
 def movement():
@@ -161,8 +161,8 @@ def game_over():
     window.bgcolor('#8AC8FD')
     image_no = 1
     winsound.PlaySound('Coffin_Dance_audio.wav',winsound.SND_ASYNC)
-    #used 
-    while image_no <=160:
+    #used for coffin dance img
+    while image_no <=80:
         img = str(image_no)
         window.addshape(end + '\\Cofine_Dance' + img + '.gif')
         time.sleep(0.0001)
@@ -170,7 +170,7 @@ def game_over():
         image_no += 1  
     game.hideturtle()
     game.write('****GAME OVER****\n\n\n\n\n   Your score is: {} '.format(COUNT),game.color('red'), font=('arial', 20), align='center')
-    time.sleep(2)
+    time.sleep(3)
     
 #winner   
 def winner():
